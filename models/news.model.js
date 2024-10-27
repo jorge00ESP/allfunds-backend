@@ -5,7 +5,7 @@ const newsSchema = new mongoose.Schema({
       type: String,
       required: true
    },
-   body:{
+   description:{
       type: String,
       required: true
    },
@@ -13,6 +13,14 @@ const newsSchema = new mongoose.Schema({
       type: Date,
       required: true,
       default: Date.now
+   },
+   author: {
+      type: String,
+      required: true
+   },
+   archiveDate: {
+      type: Date,
+      required: false,
    }
 })
 

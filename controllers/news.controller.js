@@ -35,7 +35,8 @@ exports.create = async (req, res) => {
 
    const body = new NewsModel({
       title: req.body.title,
-      body: req.body.body
+      description: req.body.description,
+      author: req.body.author
    })
 
    try{
@@ -49,6 +50,31 @@ exports.create = async (req, res) => {
    }
 
 }
+
+exports.changeToArchived = async (req, res) => {
+
+   try{
+
+      const model = await getModelById(req.params.id);
+
+
+      if(model == null){
+         return res.status(400).json({status: false, data: null, message: "The new doesn't exist"})
+      }else{
+         
+         model.archiveDate = Date.now();
+
+         const newModel = await model.save();
+
+         res.status(400).json({status: true, data: newModel, message: "The new is archived"})
+      }
+
+   }catch(err){
+      return res.status(400).json({status: false, data: null, message: err})
+   }
+   
+}
+
 
 exports.deletetById = async (req, res) => {
 
