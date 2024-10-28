@@ -9,7 +9,20 @@ async function getModelById(id){
 exports.getAll = async (req, res) => {
 
    try{
-      const allNews = await NewsModel.find();
+      const allNews = await NewsModel.find({archiveDate: null}).sort({date: -1});
+
+      res.json({status: true, data: allNews, message: "All news"})
+
+   }catch(err){
+      res.status(500).json({status: true, data: null, message: err})
+   }
+
+}
+
+exports.getAllArchived = async (req, res) => {
+
+   try{
+      const allNews = await NewsModel.find({archiveDate: {$ne: null}}).sort({archiveDate: -1});
 
       res.json({status: true, data: allNews, message: "All news"})
 
@@ -36,7 +49,8 @@ exports.create = async (req, res) => {
    const body = new NewsModel({
       title: req.body.title,
       description: req.body.description,
-      author: req.body.author
+      author: req.body.author,
+      content: req.body.content
    })
 
    try{
@@ -66,7 +80,7 @@ exports.changeToArchived = async (req, res) => {
 
          const newModel = await model.save();
 
-         res.status(400).json({status: true, data: newModel, message: "The new is archived"})
+         res.json({status: true, data: newModel, message: "The new is archived"})
       }
 
    }catch(err){

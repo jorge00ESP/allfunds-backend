@@ -9,6 +9,10 @@ const newsSchema = new mongoose.Schema({
       type: String,
       required: true
    },
+   content:{
+      type: String,
+      required: true
+   },
    date: {
       type: Date,
       required: true,
@@ -21,6 +25,7 @@ const newsSchema = new mongoose.Schema({
    archiveDate: {
       type: Date,
       required: false,
+      default: null
    }
 })
 
