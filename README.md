@@ -4,16 +4,32 @@ Version NodeJS -> 20.18.0
 
 ## Instalación del proyecto
 
-De primera mano, hay que instalar la base de datos, en mi caso lo hice con un comando de docker:
+De primera mano, hay que instalar la base de datos, para ello cree una carpeta y dentro meti el compose.yml y cree una carpeta llamada data para acceder a los datos del contendor
+
+### compose.yml
 
 ```bash
-docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
+services:
+  mongodb:
+    image: mongo:8.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin  
+      - MONGO_INITDB_ROOT_PASSWORD=allfundstest1234  
+      - MONGO_INITDB_DATABASE=allfunds  
+    volumes:
+      - mongodb_data:/data/db 
+
+volumes:
+  mongodb_data:
 ```
 
 Y para acceder a la base de datos, hay que descargar el cliente de base de datos MongoDBCompass y meter esta URL para acceder a ella:
 
 ```bash
-mongodb://85.208.20.120:27017/
+mongodb://admin:allfundstest1234@85.208.20.120:27017
 ```
 
 Una vez ya esta la base de datos encendida, para instalar el backend, hay que descargar el proyecto de github y en la carpeta raiz del proyecto ejecutar:
